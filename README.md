@@ -4,7 +4,7 @@ Some utility functions to deal with Vietnamese text.
 
 ## Usage
 
-See [test cases]() for usage.
+See [test cases](https://github.com/myguidingstar/vietnamese-utils/blob/master/test/vietnamese_utils/core_test.clj) for usage.
 
 ## License
 
