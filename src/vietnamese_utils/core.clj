@@ -49,11 +49,12 @@
 ;; by substituting them with \00DO and \00F0, respectively,
 ;; prior to normalization and then reverting them in post-processing.
 
-(defn normalize-diacritics-compat
-  [s & [classic?]]
-  (-> s
-      (str/replace \u0110 \u00D0)
-      (str/replace \u0111 \u00F0)
-      (normalize-diacritics classic?)
-      (str/replace \u00D0 \u0110)
-      (str/replace \u00F0 \u0111)))
+(defn normalize-diacritics*
+  ([s] (normalize-diacritics* s true))
+  ([s classic?]
+     (-> s
+         (str/replace \u0110 \u00D0)
+         (str/replace \u0111 \u00F0)
+         (normalize-diacritics classic?)
+         (str/replace \u00D0 \u0110)
+         (str/replace \u00F0 \u0111))))
