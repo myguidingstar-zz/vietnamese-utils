@@ -2,10 +2,10 @@
   (:require [clojure.string :as str])
   (:import [java.text Normalizer]))
 
-(def NFC  java.text.Normalizer$Form/NFC)
-(def NFD  java.text.Normalizer$Form/NFD)
-(def NFKC java.text.Normalizer$Form/NFKC)
-(def NFKD java.text.Normalizer$Form/NFKD)
+(def ^:private NFC  java.text.Normalizer$Form/NFC)
+(def ^:private NFD  java.text.Normalizer$Form/NFD)
+(def ^:private NFKC java.text.Normalizer$Form/NFKC)
+(def ^:private NFKD java.text.Normalizer$Form/NFKD)
 
 (def ^:private tones "([\u0300\u0309\u0303\u0301\u0323])")
 
