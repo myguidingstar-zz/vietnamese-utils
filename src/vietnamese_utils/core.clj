@@ -26,41 +26,22 @@
   (re-pattern (str "(?i)(?<!g)(i)([aeiouy])" tones)))
 
 (defn normalize-diacritics
-  [s & [classic?]]
-  (let [fn-convert-to-classic-on-demand
-        (if classic?
-          #(str/replace
-            %
-            (re-pattern (str "(?i)(?<!q)([ou])([aeoy])" tones "(?!\\w)" ))
-            "$1$3$2")
-          identity)]
-    (-> s
-        (Normalizer/normalize NFD)
-        (str/replace
-         (re-pattern (str "(?i)" tones "([aeiouy\u0306\u0302\u031B]+)"))
-         "$2$1")
-        (str/replace
-         (re-pattern (str "(?i)(?<=[\u0306\u0302\u031B])(.)"
-                          tones "\\B")) ;; or "\\b" if Java <= 1.5
-         "$2$1")
-        (str/replace
-         (re-pattern (str "(?i)(?<=[ae])([iouy])"
-                          tones))
-         "$2$1")
-        (str/replace
-         (re-pattern (str "(?i)(?<=[oy])([iuy])"
-                          tones))
-         "$2$1")
-        (str/replace
-         (re-pattern (str "(?i)(?<!q)(u)([aeiou])"
-                          tones))
-         "$2$1")
-        (str/replace
-         (re-pattern (str "(?i)(?<!g)(i)([aeiouy])"
-                          tones))
-         "$2$1")
-        fn-convert-to-classic-on-demand
-        (Normalizer/normalize NFC))))
+  ([s] (normalize-diacritics s true))
+  ([s classic?]
+     (let [convert-to-classic-on-demand
+           (if classic?
+             #(str/replace % pattern_classic "$1$3$2")
+             identity)]
+       (-> s
+           (Normalizer/normalize NFD)
+           (str/replace pattern_1+3+4   "$2$1")
+           (str/replace pattern_2       "$2$1")
+           (str/replace pattern_5       "$2$1")
+           (str/replace pattern_other-1 "$2$1")
+           (str/replace pattern_other-2 "$1$3$2")
+           (str/replace pattern_other-3 "$1$3$2")
+           convert-to-classic-on-demand
+           (Normalizer/normalize NFC)))))
 
 ;; Works around an obscure Normalization bug which
 ;; erroneously converts D with stroke and d with stroke to D and d,
