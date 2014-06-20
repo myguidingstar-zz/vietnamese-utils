@@ -1,4 +1,4 @@
-(defproject vietnamese-utils "0.1.0"
+(defproject vietnamese-utils "0.2.0"
   :description "Some utility functions to deal with Vietnamese text"
   :url "https://github.com/myguidingstar/vietnamese-utils"
   :license {:name "Eclipse Public License"
