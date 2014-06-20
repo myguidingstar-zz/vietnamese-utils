@@ -9,6 +9,22 @@
 
 (def ^:private tones "([\u0300\u0309\u0303\u0301\u0323])")
 
+(def ^:private pattern_classic
+  (re-pattern (str "(?i)(?<!q)([ou])([aeoy])" tones "(?!\\w)")))
+
+(def ^:private pattern_1+3+4
+  (re-pattern (str "(?i)" tones "([aeiouy\u0306\u0302\u031B]+)")))
+(def ^:private pattern_2 ;; or "\\B" if Java <= 1.5
+  (re-pattern (str "(?i)(?<=[\u0306\u0302\u031B])(.)" tones "\\b")))
+(def ^:private pattern_5
+  (re-pattern (str "(?i)(?<=[ae])([iouy])" tones)))
+(def ^:private pattern_other-1
+  (re-pattern (str "(?i)(?<=[oy])([iuy])" tones)))
+(def ^:private pattern_other-2
+  (re-pattern (str "(?i)(?<!q)(u)([aeiou])" tones)))
+(def ^:private pattern_other-3
+  (re-pattern (str "(?i)(?<!g)(i)([aeiouy])" tones)))
+
 (defn normalize-diacritics
   [s & [classic?]]
   (let [fn-convert-to-classic-on-demand
